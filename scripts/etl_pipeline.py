@@ -62,18 +62,7 @@ def stage_extraction(raw_dir: str, processed_dir: str) -> dict:
         dfs[key] = pd.read_csv(path, low_memory=False)
         print(f"  Loaded {filename:<42}  shape={dfs[key].shape}")
 
-    # Save raw copies to processed/
-    save_map = {
-        "patients_raw.csv":   dfs["patients"],
-        "admissions_raw.csv": dfs["admissions"],
-        "labevents_raw.csv":  dfs["labevents"],
-        "labitems_raw.csv":   dfs["labitems"],
-        "structured_raw.csv": dfs["structured"],
-    }
-    for fname, df in save_map.items():
-        out = os.path.join(processed_dir, fname)
-        df.to_csv(out, index=False)
-        print(f"  Saved  → {os.path.relpath(out)}")
+    # Raw files stay in data/raw/ — no copies saved to processed/
 
     print("\n✅  Extraction complete.")
     return dfs
